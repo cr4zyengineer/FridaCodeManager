@@ -194,8 +194,6 @@ struct CodeSpace: View {
                        buildView(ProjectInfo: ProjectInfo, buildv: $buildv)
                     case "Utilities":
                        buildView(ProjectInfo: ProjectInfo, buildv: $buildv)
-                    case "Sean16":
-                       sean16View(ProjectInfo: ProjectInfo, buildv: $buildv)
                     default:
                        Spacer()
                            .onAppear {
@@ -271,38 +269,6 @@ struct buildView: View {
             if !UIDevice.current.hasNotch {
                 Spacer().frame(height: 25)
             }
-        }
-    }
-}
-
-struct sean16View: View {
-    @State var ProjectInfo: Project
-    @Binding var buildv: Bool
-
-    var body: some View {
-        VStack {
-            ScreenEmulator()
-                .frame(width: screenWidth, height: screenWidth)
-                .onAppear {
-                    serialQueue.async {
-                        runtime_sean16(ProjectInfo)
-                    }
-                }
-            //NeoLog(width: UIScreen.main.bounds.width / 1.2, height: UIScreen.main.bounds.height / 4)
-            Spacer().frame(height: 25)
-            Button( action: {
-                send_cpu(1)
-                buildv = false
-            }){
-                ZStack {
-                    Rectangle()
-                        .foregroundColor(.red)
-                        .cornerRadius(15)
-                    Text("Abort")
-                        .foregroundColor(.white)
-                }
-            }
-            .frame(width: UIScreen.main.bounds.width / 1.2, height: 50)
         }
     }
 }

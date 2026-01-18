@@ -14,12 +14,5 @@
 #import <libfcm/fload.h>
 #import <libfcm/proc.h>
 #import <libzip/libzip.h>
-#import <libdycall/dyexec.h>
-#import <libcheck/check.h>
-#import <libserver/server.h>
-
-//sean16 architecture
-#import <libsean/ios.h>
-#import <libsean/compiler.h>
 
 #endif // BRIDGE_H

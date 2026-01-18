@@ -15,7 +15,7 @@ else
 SHELL := /bin/sh
 endif
 
-PLF := -LEssentials/lib/prebuild -LEssentials/lib/build -lzip -lsean #-lserver -lcheck
+PLF := -LEssentials/lib/prebuild -LEssentials/lib/build -lzip
 
 # Targets
 all: LF := -lroot -lfcm
@@ -34,11 +34,6 @@ trollstore: LF := -lfcm
 trollstore: TARGET := trollstore
 trollstore: greet compile_swift sign makechain ipa clean done
 
-# under construction!!!
-stock: LF := -lfcm -ldycall
-stock: TARGET := stock
-stock: greet compile_swift makechain_jailed ipa clean done
-
 # Functions
 greet:
 	@if [ ! -d tmp ]; then if [ ! -d SDK ]; then mkdir tmp; cd tmp; unzip ../FCM/UI/TabBar/Settings/SDKHub/sdk/iOS15.6.zip; mv iPhoneOS15.6.sdk ../SDK; cd ..; mv SDK/System/Library/PrivateFrameworks/MobileContainerManager.framework SDK/System/Library/Frameworks/MobileContainerManager.framework; rm -rf tmp; fi; fi; if [ ! -d Blueprint/FridaCodeManager.app/include ]; then cd Blueprint/FridaCodeManager.app; git clone https://github.com/theos/headers; mv headers include; fi
@@ -56,7 +51,6 @@ compile_swift:
 	fi
 	@$(MAKE) -C Essentials clean
 
-#sign: linkfix
 sign:
 	@echo "\033[32msigning FridaCodeManager $(Version)\033[0m"
 	@ldid -S./FCM/debug.xml $(OUTPUT_DIR)/swifty
@@ -91,11 +85,6 @@ ipa:
 	@cp -r Chainmaker/.tmp/toolchain/* Product/Payload/FridaCodeManager.app/toolchain
 	@cd Product && zip -rq FridaCodeManager.tipa ./Payload/*
 	@rm -rf Product/Payload
-
-#linkfix:
-#	@install_name_tool -add_rpath /var/jb/usr/lib/llvm-16/lib $(OUTPUT_DIR)/swifty
-#	@install_name_tool -add_rpath @loader_path $(OUTPUT_DIR)/swifty
-#	@install_name_tool -add_rpath @loader_path/toolchain/lib $(OUTPUT_DIR)/swifty
 
 clean:
 	@rm -rf $(OUTPUT_DIR)/swifty $(OUTPUT_DIR)/*.dylib .package
